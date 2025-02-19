@@ -1,0 +1,52 @@
+pipeline {
+agent any
+stages {
+stage('Build') {
+steps {
+sh './gradlew build'
+}
+}
+stage('Check README Changes') {
+when {
+changeset "**/README.md"
+}
+steps { echo "README file changed" }
+}
+stage('Deploy if Build Succeeded') {
+when {
+success() // Only runs if previous stages succeeded
+}
+steps {
+echo 'Deploying application...'
+}
+}
+stage('Notify if Build Failed') {
+when {
+failure() // Only runs if previous stages failed
+}
+steps {
+echo 'Sending failure notification...'
+}
+}
+// You can also check specific stage results
+stage('Run Integration Tests') {
+when {
+expression {
+return currentBuild.rawBuild.getPreviousBuild()?.getResult()?.toString()
+== 'SUCCESS'
+}
+}
+steps {
+sh './gradlew integrationTest'
+}
+}
+}
+post {
+failure {
+echo 'Build or tests failed, sending notification...'
+}
+success {
+echo 'All tests passed!'
+}
+}
+}
