@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class CalculatorTest {
      /** method comment*/
      private Calculator calculator = new Calculator();
-
+     /** Added another comment*/
      @Test
      public void testSum() {
           assertEquals(5, calculator.sum(2, 3));
