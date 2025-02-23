@@ -4,53 +4,33 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh './gradlew build'
+                sh "./gradlew build"
             }
         }
 
-    stage('Check README Changes') {
+    stage('Check Java Changes') {
           when {
-                  changeset "**/README.md"
-          }
-          steps { echo "README file changed" }
-    }
-
-    stage('Deploy if Build Succeeded') {
-        when {
-            success()
-        }
-        steps {
-            echo 'Deploying application...'
-        }
-    }
-
-    stage('Notify if Build Failed') {
-          when {
-              failure()
+                  changeset "**/*.java"
           }
           steps {
-              echo 'Sending failure notification...'
+              sh "./gradlew codecoverage"
+              sh "./gradlew checkstyle"
           }
     }
-
-    // You can also check specific stage results
-    stage('Run Integration Tests') {
-        when {
-            expression {
-                return currentBuild.rawBuild.getPreviousBuild()?.getResult()?.toString() == 'SUCCESS'
-            }
-        }
+        
+    stage('Run all other Tests') {
         steps {
-            sh './gradlew integrationTest'
+            sh "./gradlew jacocoTestReport"
+            sh "./gradlew jacocoTestCoverageVerification"
         }
       }
 }
 post {
     failure {
-        echo 'Build or tests failed, sending notification...'
+        echo 'Pipeline failure'
     }
     success {
-        echo 'All tests passed!'
+        echo 'Pipeline ran perfectly'
     }
 }
 }
