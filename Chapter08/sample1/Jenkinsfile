@@ -17,7 +17,7 @@ pipeline {
 
     stage('Deploy if Build Succeeded') {
         when {
-            success() // Only runs if previous stages succeeded
+            success()
         }
         steps {
             echo 'Deploying application...'
@@ -26,7 +26,7 @@ pipeline {
 
     stage('Notify if Build Failed') {
           when {
-              failure() // Only runs if previous stages failed
+              failure()
           }
           steps {
               echo 'Sending failure notification...'
