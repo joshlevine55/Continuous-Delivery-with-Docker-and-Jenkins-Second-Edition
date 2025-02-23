@@ -23,14 +23,14 @@ pipeline {
             sh ./gradlew jacocoTestReport
             sh ./gradlew jacocoTestCoverageVerification
         }
-      }
-}
-post {
-    failure {
-        echo 'Pipeline failure'
-    }
-    success {
-        echo 'Pipeline ran perfectly'
     }
 }
+    post {
+        failure {
+            echo 'Pipeline failure'
+        }
+        success {
+            echo 'Pipeline ran perfectly'
+        }
+    }
 }
