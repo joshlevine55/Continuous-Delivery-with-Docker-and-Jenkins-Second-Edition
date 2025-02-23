@@ -6,7 +6,6 @@ pipeline {
             steps {
                 sh """
                   cd Chapter08/sample1
-                  ls -l
                   chmod +x gradlew
                   ./gradlew build
                 """
