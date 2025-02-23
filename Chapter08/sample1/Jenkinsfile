@@ -13,15 +13,15 @@ pipeline {
                   changeset "**/*.java"
           }
           steps {
-              sh "./gradlew codecoverage"
-              sh "./gradlew checkstyle"
+              sh ./gradlew codecoverage
+              sh ./gradlew checkstyle
           }
     }
         
     stage('Run all other Tests') {
         steps {
-            sh "./gradlew jacocoTestReport"
-            sh "./gradlew jacocoTestCoverageVerification"
+            sh ./gradlew jacocoTestReport
+            sh ./gradlew jacocoTestCoverageVerification
         }
       }
 }
