@@ -4,24 +4,24 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh './gradlew build'
+                sh ./gradlew build
             }
         }
 
         stage('Check Java Changes') {
             when {
-                changeset '**/*.java'
+                changeset *.java
             }
             steps {
-                sh './gradlew codecoverage'
-                sh './gradlew checkstyle'
+                sh ./gradlew codecoverage
+                sh ./gradlew checkstyle
             }
         }
 
         stage('Run all other Tests') {
             steps {
-                sh './gradlew jacocoTestReport'
-                sh './gradlew jacocoTestCoverageVerification'
+                sh ./gradlew jacocoTestReport
+                sh ./gradlew jacocoTestCoverageVerification
             }
         }
     }
