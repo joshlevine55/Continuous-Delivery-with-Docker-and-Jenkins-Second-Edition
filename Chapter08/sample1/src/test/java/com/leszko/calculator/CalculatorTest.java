@@ -7,7 +7,7 @@ package com.leszko.calculator;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-/** class comments*/
+/** class commments*/
 public class CalculatorTest {
      /** method comment*/
      private Calculator calculator = new Calculator();
