@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 /** class commments*/
 public class CalculatorTest {
-     /** method comment*/
+     /** method comment**/
      private Calculator calculator = new Calculator();
      /** Added another comment*/
      @Test
