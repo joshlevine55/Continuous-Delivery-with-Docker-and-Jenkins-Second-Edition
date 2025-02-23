@@ -37,8 +37,7 @@ pipeline {
     stage('Run Integration Tests') {
         when {
             expression {
-                return currentBuild.rawBuild.getPreviousBuild()?.getResult()?.toString()
-== 'SUCCESS'
+                return currentBuild.rawBuild.getPreviousBuild()?.getResult()?.toString() == 'SUCCESS'
             }
         }
         steps {
