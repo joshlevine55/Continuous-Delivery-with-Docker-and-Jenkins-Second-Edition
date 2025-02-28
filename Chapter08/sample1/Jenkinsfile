@@ -24,16 +24,20 @@ pipeline {
             }
         }
 
-        stage('Run all other Tests') {
+        stage('Run in Feature Branches') {
+            when {
+                expression {
+                    branch.contains("Feature")
+                }
+            }
             steps {
                 sh """
-                  cd Chapter08/sample1
-                  ./gradlew test
-                  ./gradlew jacocoTestReport
-                """
+                   cd Chapter08/sample1
+                   ./gradlew test
+                   ./gradlew jacocoTestReport
+                """   
             }
         }
-    }
 
     post {
         failure {
