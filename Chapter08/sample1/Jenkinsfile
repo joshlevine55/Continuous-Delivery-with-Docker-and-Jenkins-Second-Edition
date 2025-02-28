@@ -12,15 +12,14 @@ pipeline {
             }
         }
 
-        stage('Check Java Changes') {
+        stage('Run in Master Branch') {
             when {
-                changeset "**/*.java"
+                branch "master"
             }
             steps {
                 sh """
                    cd Chapter08/sample1
                    ./gradlew jacocoTestCoverageVerification
-                   ./gradlew checkstyleMain
                 """   
             }
         }
