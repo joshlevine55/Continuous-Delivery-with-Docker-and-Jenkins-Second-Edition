@@ -42,7 +42,7 @@ pipeline {
         stage('Fail if Branch is not Master or Feature') {
             when {
                 expression {
-                    env.BRANCH_NAME!='Master' OR !env.BRANCH_NAME.contains("Feature")
+                    env.BRANCH_NAME!='Master' && !env.BRANCH_NAME.contains("Feature")
                 }
             post {
                 failure {
