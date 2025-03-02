@@ -10,7 +10,7 @@ pipeline {
                   ./gradlew build
                   ./gradlew test
                   ./gradlew jacocoTestReport
-                  /gradlew jacocoTestCoverageVerification
+                  ./gradlew jacocoTestCoverageVerification
                 """
             }
         }
