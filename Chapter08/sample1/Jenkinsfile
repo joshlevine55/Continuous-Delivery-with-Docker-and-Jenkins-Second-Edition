@@ -38,7 +38,8 @@ pipeline {
                 """   
             }
         }
-
+    }
+    
     post {
         failure {
             echo 'Pipeline failure'
