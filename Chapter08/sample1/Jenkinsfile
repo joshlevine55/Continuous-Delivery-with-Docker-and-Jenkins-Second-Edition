@@ -27,7 +27,7 @@ pipeline {
         stage('Run in Feature Branches') {
             when {
                 expression {
-                    !env.BRANCH_NAME.contains("Feature")
+                    env.BRANCH_NAME.contains("Feature")
                 }
             }
             steps {
