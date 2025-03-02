@@ -38,7 +38,19 @@ pipeline {
                 """   
             }
         }
+
+        stage('Fail if Branch isn't Master or Feature') {
+            when {
+                expression {
+                    env.BRANCH_NAME!='Master' OR env.BRANCH_NAME.contains("Feature")
+                }
+            post {
+                failure {
+                    echo 'Pipeline failure'
+                }
+            }
     }
+    
     
     post {
         failure {
