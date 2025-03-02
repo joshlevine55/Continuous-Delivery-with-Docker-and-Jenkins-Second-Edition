@@ -44,8 +44,10 @@ pipeline {
                 expression {
                     env.BRANCH_NAME!='master' && !env.BRANCH_NAME.contains("Feature")
                 }
+            }
             steps {
                  echo 'Pipeline failure'
+                 error "Pipeline failure, not in master or feature branch!"
             }
         }
     }
