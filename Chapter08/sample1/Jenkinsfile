@@ -44,10 +44,8 @@ pipeline {
                 expression {
                     env.BRANCH_NAME!=',aster' && !env.BRANCH_NAME.contains("Feature")
                 }
-            post {
-                failure {
-                    echo 'Pipeline failure'
-                }
+            steps {
+                 echo 'Pipeline failure'
             }
     }
     
