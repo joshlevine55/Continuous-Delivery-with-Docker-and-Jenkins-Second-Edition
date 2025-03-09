@@ -24,10 +24,10 @@ pipeline {
             }
         }
 
-        stage('Run in Feature Branches') {
+        stage('Run in all other branches') {
             when {
                 expression {
-                    env.BRANCH_NAME.contains("Feature")
+                    env.BRANCH_NAME!='master'
                 }
             }
             steps {
@@ -36,18 +36,6 @@ pipeline {
                    ./gradlew test
                    ./gradlew jacocoTestReport
                 """   
-            }
-        }
-
-        stage('Fail if Branch is not Master or Feature') {
-            when {
-                expression {
-                    env.BRANCH_NAME!='master' && !env.BRANCH_NAME.contains("Feature")
-                }
-            }
-            steps {
-                 echo 'Pipeline failure'
-                 error "Pipeline failure, not in master or feature branch!"
             }
         }
     }
