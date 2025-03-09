@@ -8,46 +8,10 @@ pipeline {
                   cd Chapter08/sample1
                   chmod +x gradlew
                   ./gradlew build
+                  ./gradlew test
+                  ./gradlew jacocoTestReport
+                  ./gradlew jacocoTestCoverageVerification
                 """
-            }
-        }
-
-        stage('Run in Master Branch') {
-            when {
-                branch "master"
-            }
-            steps {
-                sh """
-                   cd Chapter08/sample1
-                   ./gradlew jacocoTestCoverageVerification
-                """   
-            }
-        }
-
-        stage('Run in Feature Branches') {
-            when {
-                expression {
-                    env.BRANCH_NAME.contains("Feature")
-                }
-            }
-            steps {
-                sh """
-                   cd Chapter08/sample1
-                   ./gradlew test
-                   ./gradlew jacocoTestReport
-                """   
-            }
-        }
-
-        stage('Fail if Branch is not Master or Feature') {
-            when {
-                expression {
-                    env.BRANCH_NAME!='master' && !env.BRANCH_NAME.contains("Feature")
-                }
-            }
-            steps {
-                 echo 'Pipeline failure'
-                 error "Pipeline failure, not in master or feature branch!"
             }
         }
     }
