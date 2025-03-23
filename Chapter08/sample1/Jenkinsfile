@@ -69,6 +69,12 @@ pipeline {
                 
                 }
             }
+       
+        stage('Check Docker Availability') {
+           steps {
+               sh 'docker --version'
+           }
+       }
 
        stage('Build Container') {
             when {
