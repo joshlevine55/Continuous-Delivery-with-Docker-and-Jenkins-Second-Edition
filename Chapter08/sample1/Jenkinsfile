@@ -13,22 +13,11 @@ pipeline {
         REGISTRY_HOST = "localhost:5001" 
         PROJECT_DIR = "Chapter08/sample1"
         IMAGE_NAME = "calculator"
-        IMAGE_TAG = "" // Example tag
+        IMAGE_TAG = ""
     }
 
     stages {
-        stage('Checkout code and prepare environment') {
-            steps {
-                git url: 'https://github.com/dlambrig/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git', branch: 'master'
-                
-                sh """
-                    set -e
-                    cd ${PROJECT_DIR}
-                    chmod +x gradlew
-                """
-            }
-        }
-        
+    
         stage('Build') {
             steps {
                 sh """
