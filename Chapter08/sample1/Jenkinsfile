@@ -9,11 +9,11 @@ pipeline {
     }
     
     environment {
-        REGISTRY = "https://<registry-address>:5001" // Replace with actual registry address
-        REGISTRY_HOST = "<registry-address>:5001" // Replace with actual registry address
+        REGISTRY = "https://localhost:5001" 
+        REGISTRY_HOST = "localhost:5001" 
         PROJECT_DIR = "Chapter08/sample1"
         IMAGE_NAME = "calculator"
-        IMAGE_TAG = "${BUILD_NUMBER}" // Example tag
+        IMAGE_TAG = "" // Example tag
     }
 
     stages {
@@ -49,22 +49,8 @@ pipeline {
                    cd Chapter08/sample1
                    ./gradlew jacocoTestCoverageVerification
                 """
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'docker-registry', 
-                                                     usernameVariable: 'DOCKER_USER', 
-                                                     passwordVariable: 'DOCKER_PASS')]) {
-                        sh """
-                            set -e
-                            cd ${PROJECT_DIR}
-                            echo "\$DOCKER_PASS" | docker login \$REGISTRY -u \$DOCKER_USER --password-stdin
-                            docker build -t ${IMAGE_NAME} .
-                            docker tag ${IMAGE_NAME} ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
-                            docker push ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
-                        """
-                    }
                 }
             }
-        }
 
         stage('Run in Playground') {
             when {
@@ -92,19 +78,32 @@ pipeline {
                    ./gradlew test
                    ./gradlew jacocoTestReport
                 """
+                
+                }
+            }
+        }
+    }
+
+       stage('Build Container') {
+            when {
+                anyOf {
+                    branch 'main'
+                    branch 'feature'
+                }
+            }
+            steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'docker-registry', 
-                                                     usernameVariable: 'DOCKER_USER', 
-                                                     passwordVariable: 'DOCKER_PASS')]) {
-                        sh """
-                            set -e
-                            cd ${PROJECT_DIR}
-                            echo "\$DOCKER_PASS" | docker login \$REGISTRY -u \$DOCKER_USER --password-stdin
-                            docker build -t ${IMAGE_NAME} .
-                            docker tag ${IMAGE_NAME} ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
-                            docker push ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
-                        """
+                    if (env.BRANCH_NAME == 'main') {
+                        IMAGE_NAME = "calculator"
+                        IMAGE_TAG = "1.0"
+                    } else if (env.BRANCH_NAME == 'feature') {
+                        IMAGE_NAME = "calculator-feature"
+                        IMAGE_TAG = "0.1"
                     }
+                    sh """
+                        docker build -t ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG} ${PROJECT_DIR}
+                        docker push ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
+                    """
                 }
             }
         }
@@ -112,10 +111,10 @@ pipeline {
      
     post {
         failure {
-            echo 'Pipeline failure'
+            echo 'Build Failed!'
         }
         success {
-            echo 'Pipeline ran perfectly'
+            echo 'Pipeline ran perfectly!'
         }
     }
 }
