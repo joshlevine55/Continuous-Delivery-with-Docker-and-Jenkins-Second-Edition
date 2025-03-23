@@ -87,8 +87,8 @@ pipeline {
                         IMAGE_TAG = "0.1"
                     }
                     sh """
-                        docker build -t ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG} ${PROJECT_DIR}
-                        docker push ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
+                      docker build -t ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG} ${PROJECT_DIR}
+                      docker push ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
                     """
                 }
             }
