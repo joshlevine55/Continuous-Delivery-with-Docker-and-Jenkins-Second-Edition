@@ -88,8 +88,6 @@ pipeline {
                     branch 'feature'
                 }
             }
-       }
-           
             steps {
                 script {
                     if (env.BRANCH_NAME == 'main') {
@@ -106,6 +104,7 @@ pipeline {
                 }
             }
         }
+      }
     }
      
     post {
