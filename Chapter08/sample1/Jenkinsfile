@@ -88,6 +88,9 @@ pipeline {
                     }
                     withCredentials([usernamePassword(credentialsId: 'docker-registry', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh """
+                      set -e
+                      cd ${PROJECT_DIR}
+                      echo "\$DOCKER_PASS" | docker login \$REGISTRY -u \$DOCKER_USER --password-stdin
                       docker build -t ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG} ${PROJECT_DIR}
                       docker push ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
                        """
