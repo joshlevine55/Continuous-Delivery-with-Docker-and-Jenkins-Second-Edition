@@ -1,13 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'dlambrig/gradle-agent:latest'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-            alwaysPull true
-            customWorkspace '/home/jenkins/.gradle/workspace'
-        }
-     }
-    
+    agent any
     environment {
         REGISTRY = "https://localhost:5001" 
         REGISTRY_HOST = "localhost:5001" 
