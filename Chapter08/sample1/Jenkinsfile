@@ -71,7 +71,7 @@ pipeline {
            }
        }
 
-       stage('Build Container') {
+        stage('Build Container') {
             when {
                 anyOf {
                     branch 'main'
