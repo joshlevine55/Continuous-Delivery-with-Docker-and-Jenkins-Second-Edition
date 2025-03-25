@@ -89,7 +89,7 @@ pipeline {
                            set -e
                            pwd
                            hostname
-                           docker login https://localhost:5001 -u testuser -p testpassword
+                           docker login \$REGISTRY -u \$DOCKER_USER --password-stdin
                            docker build -t ${IMAGE_NAME} .
                            docker tag ${IMAGE_NAME} ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
                            docker push ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
