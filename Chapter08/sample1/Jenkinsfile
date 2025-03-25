@@ -82,6 +82,7 @@ pipeline {
                         sh """
                            set -e
                            cd ${PROJECT_DIR}
+                           pwd
                            echo "\$DOCKER_PASS" | docker login \$REGISTRY -u \$DOCKER_USER --password-stdin
                            docker build -t ${IMAGE_NAME} .
                            docker tag ${IMAGE_NAME} ${REGISTRY_HOST}/${IMAGE_NAME}:${IMAGE_TAG}
