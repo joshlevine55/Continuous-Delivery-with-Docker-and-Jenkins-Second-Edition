@@ -81,7 +81,6 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'docker-registry', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                         sh """
                            set -e
-                           cd ${PROJECT_DIR}
                            pwd
                            docker login https://localhost:5001 -u testuser -p testpassword
                            docker build -t ${IMAGE_NAME} .
