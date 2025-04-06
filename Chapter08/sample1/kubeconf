@@ -1,6 +1,6 @@
 clusters:
 - cluster:
-    certificate-authority: /home/jenkins/ca.crt
+    certificate-authority: /home/jenkins/.minikube/ca.crt
     server: https://172.18.0.5:8443
   name: minikube
 contexts:
@@ -15,5 +15,5 @@ preferences: {}
 users:
 - name: minikube
   user:
-    client-certificate: /home/jenkins/.minikube/client.crt
-    client-key: /home/jenkins/.minikube/profiles/.minikube/client.key
+    client-certificate: /home/jenkins/.minikube/profiles/minikube/client.crt
+    client-key: /home/jenkins/.minikube/profiles/minikube/client.key
