@@ -15,3 +15,6 @@ curl https://packages.cloud.google.com/apt/doc/apt-key.gpg \
 # Update and install
 apt update && apt install -y google-cloud-sdk
 
+#Install auth plugin
+apt-get install google-cloud-cli-gke-gcloud-auth-plugin
+
